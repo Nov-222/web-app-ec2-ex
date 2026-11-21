@@ -136,7 +136,7 @@ document.getElementById("guest-form").addEventListener("submit", async (event) =
 });
 
 async function deleteGuest(id) {
-  await deleteGuest(id)
+  await deleteGuest_api(id)
   showMessage("Huésped eliminado");
   loadGuests();
 }
@@ -145,7 +145,7 @@ async function deleteGuest(id) {
 async function loadReservations() {
   try {
     const status = document.getElementById("reservation-filter").value;
-    const reservations = await Reservations_api()
+    const reservations = await Reservations_api(status)
     const body = document.getElementById("reservations-body");
     if (reservations.length === 0) {
       body.innerHTML = '<tr><td colspan="10" class="empty">No hay reservas</td></tr>';
@@ -182,14 +182,14 @@ document.getElementById("reservation-form").addEventListener("submit", async (ev
   data.room_id = Number(data.room_id);
   data.guest_id = Number(data.guest_id);
   data.guests_count = Number(data.guests_count);
-  const body = createReservation_api(data)
+  const body = await createReservation_api(data)
   form.reset();
   showMessage("Reserva #" + body.id + " creada · total Bs " + body.total_price);
   loadReservations();
 });
 
 async function changeReservation(id, action) {
-  await changeReservation(id, action)
+  const body = await changeReservation_api(id, action);
   showMessage("Reserva #" + id + ": " + STATUS_LABELS[body.status]);
   loadReservations();
 }
@@ -198,3 +198,8 @@ async function changeReservation(id, action) {
 loadRooms();
 loadGuests();
 loadReservations();
+
+window.toggleMaintenance = toggleMaintenance;
+window.deleteRoom = deleteRoom;
+window.deleteGuest = deleteGuest;
+window.changeReservation = changeReservation;

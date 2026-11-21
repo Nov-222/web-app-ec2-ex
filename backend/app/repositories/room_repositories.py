@@ -12,7 +12,7 @@ def get_room(room_id):
     return db.session.get(Room, room_id)
 
 
-def create_room(number, room_type, price_per_night, capacity, status="available"):
+def create_room(number, room_type, price_per_night, capacity, status="Disponible"):
     room = Room(
         number=number,
         type=room_type,
@@ -41,3 +41,6 @@ def update_room(room, room_type=None, status=None, price_per_night=None, capacit
 def delete_room(room):
     db.session.delete(room)
     db.session.commit()
+
+def get_room_by_number(number):
+    return Room.query.filter_by(number=number).first()

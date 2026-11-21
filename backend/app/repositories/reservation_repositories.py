@@ -35,12 +35,12 @@ def update_reservation_status(reservation, status):
     return reservation
 
 def cancel_reservation(reservation):
-    return update_reservation_status(reservation, "cancelled")
+    return update_reservation_status(reservation, "Cancelada")
 
 
 def check_in_reservation(reservation):
-    return update_reservation_status(reservation, "checked_in")
+    return update_reservation_status(reservation, "Hospedado")
 
 
 def check_out_reservation(reservation):
-    return update_reservation_status(reservation, "checked_out")
+    return update_reservation_status(reservation, "Finalizada")

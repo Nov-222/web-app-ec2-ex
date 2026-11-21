@@ -19,3 +19,6 @@ def create_guest(full_name, email, document):
 def delete_guest(guest):
     db.session.delete(guest)
     db.session.commit()
+
+def get_guest_by_email(email):
+    return Guest.query.filter_by(email=email).first()
