@@ -15,8 +15,18 @@ import {
 
 const ROOM_TYPES = { single: "Simple", double: "Doble", family: "Familiar", suite: "Suite" };
 const STATUS_LABELS = {
-  available: "Disponible", maintenance: "Mantenimiento",
-  confirmed: "Confirmada", checked_in: "Hospedado", checked_out: "Finalizada", cancelled: "Cancelada",
+  available: "Disponible",
+  maintenance: "Mantenimiento",
+  confirmed: "Confirmada",
+  checked_in: "Hospedado",
+  checked_out: "Finalizada",
+  cancelled: "Cancelada",
+  Disponible: "Disponible",
+  Mantenimiento: "Mantenimiento",
+  Confirmada: "Confirmada",
+  Hospedado: "Hospedado",
+  Finalizada: "Finalizada",
+  Cancelada: "Cancelada",
 };
 
 // ---------- utilidades ----------
@@ -89,8 +99,17 @@ document.getElementById("room-form").addEventListener("submit", async (event) =>
 });
 
 async function toggleMaintenance(id, status) {
-  await updateRoom_api(id, { status: status === "maintenance" ? "available" : "maintenance" })
-  loadRooms();
+  let nextStatus = "Mantenimiento";
+  if (status === "Mantenimiento" || status === "maintenance") {
+    nextStatus = "Disponible";
+  }
+
+  try {
+    await updateRoom_api(id, { status: nextStatus });
+    loadRooms();
+  } catch (error) {
+    showMessage(error.message, true);
+  }
 }
 
 async function deleteRoom(id) {
